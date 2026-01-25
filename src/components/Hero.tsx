@@ -10,7 +10,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-16 lg:pt-0">
+    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-16 lg:pt-0">
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-accent/30 z-10" />
       

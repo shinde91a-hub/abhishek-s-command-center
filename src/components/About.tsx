@@ -11,7 +11,7 @@ const timeline = [
 
 const About = () => {
   return (
-    <section id="about" className="relative py-12 lg:py-16">
+    <section id="about" className="relative py-6 lg:py-8">
       <div className="section-container">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Column - About Text */}
