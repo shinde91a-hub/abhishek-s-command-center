@@ -37,14 +37,14 @@ const Navigation = () => {
 
   return (
     <>
-      {/* Desktop Side Navigation */}
+      {/* Desktop Side Navigation - Icon Only */}
       <motion.nav
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-2"
+        className="fixed left-4 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col"
       >
-        <div className="glass-card py-4 px-3 rounded-2xl">
+        <div className="glass-card py-3 px-2 rounded-xl">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path || 
@@ -55,16 +55,16 @@ const Navigation = () => {
                 key={item.name}
                 to={item.path}
                 onClick={() => handleNavClick(item.path)}
-                className={`group flex items-center gap-3 py-3 px-3 rounded-xl transition-all duration-300 ${
+                title={item.name}
+                className={`group relative flex items-center justify-center p-2.5 rounded-lg transition-all duration-300 ${
                   isActive 
                     ? 'bg-primary text-primary-foreground' 
                     : 'hover:bg-accent text-muted-foreground hover:text-foreground'
                 }`}
               >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                <span className={`text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${
-                  isActive ? 'max-w-24 opacity-100' : 'max-w-0 opacity-0 group-hover:max-w-24 group-hover:opacity-100'
-                }`}>
+                <Icon className="w-5 h-5" />
+                {/* Tooltip */}
+                <span className="absolute left-full ml-3 px-2 py-1 rounded-md bg-foreground text-background text-xs font-medium whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200">
                   {item.name}
                 </span>
               </Link>
