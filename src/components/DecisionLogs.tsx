@@ -62,7 +62,7 @@ const decisionLogs = [
 
 const DecisionLogs = () => {
   return (
-    <section id="decisions" className="relative py-24 lg:py-32 bg-gradient-to-b from-accent/30 to-background">
+    <section id="decisions" className="relative py-12 lg:py-16 bg-gradient-to-b from-accent/30 to-background">
       <div className="section-container">
         {/* Section Header */}
         <motion.div
@@ -70,26 +70,25 @@ const DecisionLogs = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider">
+          <span className="text-primary font-semibold text-xs uppercase tracking-wider">
             Career Journey
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mt-3 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2 mb-2">
             Decision Logs
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A chronological record of high-impact decisions and the systems I built. 
-            Each entry represents a chapter in operational transformation.
+          <p className="text-base text-muted-foreground max-w-xl mx-auto">
+            High-impact decisions and the systems I built.
           </p>
         </motion.div>
 
         {/* Timeline */}
         <div className="relative">
           {/* Vertical Line */}
-          <div className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-px bg-border lg:-translate-x-1/2" />
+          <div className="absolute left-3 lg:left-1/2 top-0 bottom-0 w-px bg-border lg:-translate-x-1/2" />
 
-          <div className="space-y-12">
+          <div className="space-y-6">
             {decisionLogs.map((log, index) => {
               const Icon = log.icon;
               const isEven = index % 2 === 0;
@@ -97,43 +96,43 @@ const DecisionLogs = () => {
               return (
                 <motion.div
                   key={log.id}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className={`relative flex flex-col lg:flex-row gap-8 ${
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  className={`relative flex flex-col lg:flex-row gap-4 ${
                     isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'
                   }`}
                 >
                   {/* Timeline Node */}
-                  <div className="absolute left-4 lg:left-1/2 -translate-x-1/2 w-8 h-8 bg-background border-4 border-primary rounded-full z-10 flex items-center justify-center">
-                    <span className="text-xs font-bold text-primary">{log.phase}</span>
+                  <div className="absolute left-3 lg:left-1/2 -translate-x-1/2 w-6 h-6 bg-background border-2 border-primary rounded-full z-10 flex items-center justify-center">
+                    <span className="text-[10px] font-bold text-primary">{log.phase}</span>
                   </div>
 
                   {/* Spacer for Desktop */}
                   <div className="hidden lg:block lg:w-1/2" />
 
                   {/* Card */}
-                  <div className="ml-12 lg:ml-0 lg:w-1/2 lg:px-8">
+                  <div className="ml-10 lg:ml-0 lg:w-1/2 lg:px-6">
                     <Link
                       to={`/case-study/${log.slug}`}
                       className="block group"
                     >
                       <motion.div
                         whileHover={{ scale: 1.02 }}
-                        className="glass-card-hover p-6 lg:p-8 rounded-2xl"
+                        className="glass-card-hover p-4 lg:p-5 rounded-xl"
                       >
                         {/* Header */}
-                        <div className="flex items-start justify-between gap-4 mb-4">
-                          <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                              <Icon className="w-6 h-6" />
+                        <div className="flex items-start justify-between gap-3 mb-3">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-lg bg-accent flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                              <Icon className="w-4 h-4" />
                             </div>
                             <div>
-                              <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                              <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">
                                 {log.title}
                               </h3>
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-xs text-muted-foreground">
                                 {log.company} • {log.year}
                               </p>
                             </div>
@@ -141,19 +140,19 @@ const DecisionLogs = () => {
                         </div>
 
                         {/* Summary */}
-                        <p className="text-muted-foreground mb-4 leading-relaxed">
+                        <p className="text-sm text-muted-foreground mb-3 leading-relaxed line-clamp-2">
                           {log.summary}
                         </p>
 
                         {/* Impact Badge */}
                         <div className="flex items-center justify-between">
-                          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent text-accent-foreground text-sm font-medium">
-                            <TrendingUp className="w-4 h-4" />
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-accent text-accent-foreground text-xs font-medium">
+                            <TrendingUp className="w-3 h-3" />
                             {log.impact}
                           </span>
-                          <span className="inline-flex items-center gap-1 text-primary font-medium text-sm group-hover:gap-2 transition-all">
+                          <span className="inline-flex items-center gap-1 text-primary font-medium text-xs group-hover:gap-1.5 transition-all">
                             View Case Study
-                            <ArrowRight className="w-4 h-4" />
+                            <ArrowRight className="w-3 h-3" />
                           </span>
                         </div>
                       </motion.div>

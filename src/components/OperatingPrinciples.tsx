@@ -74,7 +74,7 @@ const OperatingPrinciples = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   return (
-    <section id="principles" className="relative py-24 lg:py-32">
+    <section id="principles" className="relative py-12 lg:py-16">
       <div className="section-container">
         {/* Section Header */}
         <motion.div
@@ -82,19 +82,18 @@ const OperatingPrinciples = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
             Operating Principles
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            These principles guide my decisions in ambiguous, high-pressure environments 
-            where structure is weak and outcomes still matter.
+          <p className="text-base text-muted-foreground max-w-xl mx-auto">
+            Guiding decisions in ambiguous, high-pressure environments.
           </p>
         </motion.div>
 
         {/* Principles Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
           {principles.map((principle, index) => {
             const Icon = principle.icon;
             const isHovered = hoveredId === principle.id;
@@ -105,10 +104,10 @@ const OperatingPrinciples = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
                 onMouseEnter={() => setHoveredId(principle.id)}
                 onMouseLeave={() => setHoveredId(null)}
-                className={`relative glass-card-hover p-6 rounded-2xl cursor-pointer overflow-hidden ${
+                className={`relative glass-card-hover p-4 rounded-xl cursor-pointer overflow-hidden ${
                   isHovered ? 'scale-[1.02] z-10' : ''
                 }`}
               >
@@ -119,24 +118,24 @@ const OperatingPrinciples = () => {
                     opacity: isHovered ? 0.1 : 0,
                     scale: isHovered ? 1 : 0.8 
                   }}
-                  className="absolute inset-0 bg-primary rounded-2xl"
+                  className="absolute inset-0 bg-primary rounded-xl"
                 />
 
                 <div className="relative z-10">
                   {/* Icon */}
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300 ${
+                  <div className={`w-9 h-9 rounded-lg flex items-center justify-center mb-3 transition-colors duration-300 ${
                     isHovered ? 'bg-primary text-primary-foreground' : 'bg-accent text-primary'
                   }`}>
-                    <Icon className="w-6 h-6" />
+                    <Icon className="w-4 h-4" />
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-lg font-semibold text-foreground mb-2">
+                  <h3 className="text-sm font-semibold text-foreground mb-1">
                     {principle.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-xs text-muted-foreground leading-relaxed">
                     {principle.description}
                   </p>
 
@@ -146,15 +145,15 @@ const OperatingPrinciples = () => {
                     animate={{ 
                       opacity: isHovered ? 1 : 0,
                       height: isHovered ? 'auto' : 0,
-                      marginTop: isHovered ? 16 : 0 
+                      marginTop: isHovered ? 12 : 0 
                     }}
                     className="overflow-hidden"
                   >
-                    <div className="pt-4 border-t border-border">
-                      <span className="text-xs font-semibold text-primary uppercase tracking-wider">
+                    <div className="pt-3 border-t border-border">
+                      <span className="text-[10px] font-semibold text-primary uppercase tracking-wider">
                         In Practice
                       </span>
-                      <p className="text-sm text-foreground mt-2 italic">
+                      <p className="text-xs text-foreground mt-1 italic">
                         "{principle.inPractice}"
                       </p>
                     </div>
@@ -171,13 +170,13 @@ const OperatingPrinciples = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16 text-center glass-card p-8 rounded-2xl max-w-3xl mx-auto"
+          className="mt-8 text-center glass-card p-5 rounded-xl max-w-2xl mx-auto"
         >
-          <p className="text-muted-foreground italic">
-            "The through-line: Create clarity, build accountability, optimize flow—then add leverage."
+          <p className="text-sm text-muted-foreground italic">
+            "Create clarity, build accountability, optimize flow—then add leverage."
           </p>
-          <p className="text-foreground font-medium mt-2">
-            The result: Systems that work, scale, and survive leadership transitions.
+          <p className="text-sm text-foreground font-medium mt-1">
+            Systems that work, scale, and survive leadership transitions.
           </p>
         </motion.div>
       </div>
