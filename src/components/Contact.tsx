@@ -3,7 +3,7 @@ import { Mail, Linkedin, ArrowUpRight, MessageSquare } from 'lucide-react';
 
 const Contact = () => {
   return (
-    <section id="contact" className="relative py-12 lg:py-16 bg-gradient-to-b from-background to-accent/20">
+    <section id="contact" className="relative py-6 lg:py-8 bg-gradient-to-b from-background to-accent/20">
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

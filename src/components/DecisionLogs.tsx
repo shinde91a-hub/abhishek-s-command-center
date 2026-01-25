@@ -62,7 +62,7 @@ const decisionLogs = [
 
 const DecisionLogs = () => {
   return (
-    <section id="decisions" className="relative py-12 lg:py-16 bg-gradient-to-b from-accent/30 to-background">
+    <section id="decisions" className="relative py-6 lg:py-8 bg-gradient-to-b from-accent/30 to-background">
       <div className="section-container">
         {/* Section Header */}
         <motion.div

@@ -74,7 +74,7 @@ const OperatingPrinciples = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   return (
-    <section id="principles" className="relative py-12 lg:py-16">
+    <section id="principles" className="relative py-6 lg:py-8">
       <div className="section-container">
         {/* Section Header */}
         <motion.div
