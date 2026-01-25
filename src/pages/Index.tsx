@@ -6,6 +6,7 @@ import OperatingPrinciples from '@/components/OperatingPrinciples';
 import DecisionLogs from '@/components/DecisionLogs';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import AIChatbot from '@/components/AIChatbot';
 
 const Index = () => {
   return (
@@ -15,6 +16,9 @@ const Index = () => {
       
       {/* Navigation */}
       <Navigation />
+      
+      {/* AI Chatbot */}
+      <AIChatbot />
       
       {/* Main Content */}
       <main className="relative z-10">
