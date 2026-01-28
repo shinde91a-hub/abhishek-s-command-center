@@ -20,13 +20,13 @@ const Footer = () => {
           {/* Links */}
           <div className="flex items-center gap-6">
             <a
-              href="mailto:contact@abhishekshinde.com"
+              href="mailto:shinde.91a@gmail.com"
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               Email
             </a>
             <a
-              href="https://linkedin.com/in/abhishekshinde"
+              href="https://www.linkedin.com/in/abhishek-shinde91/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
