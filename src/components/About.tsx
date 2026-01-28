@@ -2,11 +2,11 @@ import { motion } from 'framer-motion';
 import { MapPin, Briefcase, Calendar, ExternalLink } from 'lucide-react';
 
 const timeline = [
-  { year: '2025', role: 'Persistent Systems', description: 'Cybersecurity project lifecycle coordination' },
-  { year: '2020', role: 'ID Medical', description: 'Healthcare operations, 2 promotions in 1 year' },
-  { year: '2019', role: 'Fareportal', description: 'Travel technology operations' },
-  { year: '2018', role: 'Tech Mahindra', description: 'L2 escalations, top performer' },
-  { year: '2014', role: 'IDeaS - A SAS Company', description: 'Technical Support to Product Engineer' },
+  { year: 'Feb 2025', role: 'Persistent Systems', description: 'Cybersecurity project lifecycle coordination, establishing ownership & frameworks' },
+  { year: 'Feb 2020', role: 'ID Medical', description: 'Healthcare workforce operations for NHS clients, 99.8% compliance, 2 promotions in 1 year' },
+  { year: 'Feb 2019', role: 'Fareportal', description: 'Travel technology platform operations' },
+  { year: 'June 2018', role: 'Tech Mahindra', description: 'L2 escalations team, 1000+ calls, top performer' },
+  { year: 'June 2014', role: 'IDeaS - A SAS Company', description: 'Technical Support to Product Engineer, 2 promotions in 2 years' },
 ];
 
 const About = () => {
@@ -34,7 +34,8 @@ const About = () => {
             <p className="text-base text-muted-foreground leading-relaxed">
               Most situations arrive without clean data or obvious answers. I focus on 
               identifying what matters, making decisions that hold under pressure, and 
-              owning the consequences.
+              owning the consequences. I operate comfortably in the gap between stakeholder 
+              expectations and system reality.
             </p>
 
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -66,9 +67,10 @@ const About = () => {
               <div className="flex flex-wrap gap-1.5">
                 {[
                   'Ownership in Ambiguous Environments',
-                  'System Stabilization',
-                  'Data-Driven Visibility',
-                  'High-Stakes Decisions',
+                  'System Stabilization Under Pressure',
+                  'Data-Driven Visibility & Accountability',
+                  'High-Stakes Decision Making',
+                  'Workflow Transformation',
                 ].map((competency) => (
                   <span
                     key={competency}
