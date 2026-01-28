@@ -60,8 +60,9 @@ const Hero = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed"
           >
-            Senior execution leader turning unclear, high-volume operational problems 
-            into stable systems.
+            Senior execution leader with a decade of experience turning unclear, high-volume 
+            operational problems into stable systems. I focus on identifying what matters, making 
+            decisions that hold under pressure, and owning the consequences.
           </motion.p>
 
           {/* CTA Buttons */}
