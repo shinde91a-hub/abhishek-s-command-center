@@ -30,7 +30,7 @@ const Contact = () => {
           {/* Contact Options */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <motion.a
-              href="mailto:contact@abhishekshinde.com"
+              href="mailto:shinde.91a@gmail.com"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-orange group"
@@ -41,7 +41,7 @@ const Contact = () => {
             </motion.a>
 
             <motion.a
-              href="https://linkedin.com/in/abhishekshinde"
+              href="https://www.linkedin.com/in/abhishek-shinde91/"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
