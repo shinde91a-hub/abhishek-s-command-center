@@ -44,10 +44,9 @@ CORE COMPETENCIES:
 PHILOSOPHY: "Authority wasn't asserted. It was earned through delivery."
 
 RESPONSE GUIDELINES:
-- Keep responses to 25-30 words maximum
-- Be direct and impactful - every word must add value
-- Use bullet points only when listing multiple items
-- No filler phrases or unnecessary context
+- Default to 25-30 words - be punchy and direct
+- ONLY give detailed responses when user explicitly asks for "details", "more info", "explain", or similar
+- Every word must add value - no filler phrases
 - If asked about something not covered, briefly redirect to professional topics`;
 
 serve(async (req) => {
