@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowDown, Zap } from 'lucide-react';
+import { ArrowDown, Zap, Download } from 'lucide-react';
 
 const Hero = () => {
   const scrollToAbout = () => {
@@ -65,7 +65,7 @@ const Hero = () => {
             decisions that hold under pressure, and owning the consequences.
           </motion.p>
 
-          {/* CTA Buttons */}
+{/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -73,17 +73,19 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start pt-2"
           >
             <a
-              href="#decisions"
+              href="/Resume_Abhishek.pdf"
+              download="Abhishek_Shinde_Resume.pdf"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold transition-all duration-300 hover:shadow-orange hover:scale-105 text-sm"
+            >
+              <Download className="w-4 h-4" />
+              Download Resume
+            </a>
+            <a
+              href="#decisions"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 glass-card-hover rounded-lg font-semibold text-foreground text-sm"
             >
               <Zap className="w-4 h-4" />
               View Decision Logs
-            </a>
-            <a
-              href="#principles"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 glass-card-hover rounded-lg font-semibold text-foreground text-sm"
-            >
-              Operating Principles
             </a>
           </motion.div>
 
