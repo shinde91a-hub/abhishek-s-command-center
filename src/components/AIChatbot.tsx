@@ -15,52 +15,146 @@ const SUGGESTED_QUESTIONS = [
   "What are his operating principles?",
 ];
 
-// Animated orb SVG paths for the "voice wave" effect
-const OrbRings = ({ isActive, isSpeaking }: { isActive: boolean; isSpeaking: boolean }) => (
-  <div className="relative flex items-center justify-center">
-    {/* Outer pulse rings */}
-    {(isActive || isSpeaking) && (
-      <>
-        <motion.div
-          className="absolute rounded-full border border-primary/30"
-          animate={{ scale: [1, 1.8], opacity: [0.6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeOut' }}
-          style={{ width: 80, height: 80 }}
-        />
-        <motion.div
-          className="absolute rounded-full border border-primary/20"
-          animate={{ scale: [1, 2.2], opacity: [0.4, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeOut', delay: 0.3 }}
-          style={{ width: 80, height: 80 }}
-        />
-      </>
-    )}
-    {/* Idle glow */}
-    {!isActive && !isSpeaking && (
-      <motion.div
-        className="absolute rounded-full bg-primary/10"
-        animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-        style={{ width: 80, height: 80 }}
+// Lissajous-style flowing wave orb — inspired by the reference image but in orange
+const WaveOrb = ({ isActive, isSpeaking, size = 120 }: { isActive: boolean; isSpeaking: boolean; size?: number }) => {
+  const cx = size / 2;
+  const cy = size / 2;
+  const r = size * 0.38;
+
+  // Generate lissajous-style wave path
+  const buildPath = (phaseOffset: number, radiusScale: number) => {
+    const steps = 200;
+    const points: string[] = [];
+    for (let i = 0; i <= steps; i++) {
+      const t = (i / steps) * Math.PI * 2;
+      const x = cx + r * radiusScale * Math.sin(2 * t + phaseOffset) * Math.cos(t * 0.7);
+      const y = cy + r * radiusScale * Math.cos(3 * t + phaseOffset) * Math.sin(t * 0.5 + 0.3);
+      points.push(i === 0 ? `M ${x} ${y}` : `L ${x} ${y}`);
+    }
+    return points.join(' ') + ' Z';
+  };
+
+  const waves = [
+    { phase: 0,    rs: 1.0,  opacity: 0.9, delay: 0 },
+    { phase: 0.6,  rs: 0.88, opacity: 0.7, delay: 0.2 },
+    { phase: 1.2,  rs: 0.76, opacity: 0.55, delay: 0.4 },
+    { phase: 1.8,  rs: 0.64, opacity: 0.4, delay: 0.6 },
+    { phase: 2.4,  rs: 0.52, opacity: 0.3, delay: 0.8 },
+  ];
+
+  return (
+    <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
+      {/* Soft radial glow behind */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background: 'radial-gradient(circle, hsl(30 100% 50% / 0.18) 0%, hsl(30 100% 50% / 0.06) 60%, transparent 80%)',
+        }}
       />
-    )}
-    {/* Core orb */}
-    <motion.div
-      className="relative w-20 h-20 rounded-full flex items-center justify-center cursor-pointer overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, hsl(30 100% 50%) 0%, hsl(35 100% 60%) 60%, hsl(25 100% 45%) 100%)',
-        boxShadow: '0 0 30px hsl(30 100% 50% / 0.4), 0 0 60px hsl(30 100% 50% / 0.2)',
-      }}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      animate={isSpeaking ? { scale: [1, 1.08, 1] } : {}}
-      transition={isSpeaking ? { duration: 0.6, repeat: Infinity } : {}}
-    >
-      {/* Inner shimmer */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/30 to-transparent" />
-      <Bot className="w-8 h-8 text-white relative z-10" />
-    </motion.div>
-  </div>
+
+      {/* Active pulse ring */}
+      {(isActive || isSpeaking) && (
+        <>
+          <motion.div
+            className="absolute rounded-full border border-primary/40"
+            animate={{ scale: [1, 1.6], opacity: [0.7, 0] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: 'easeOut' }}
+            style={{ width: size * 0.67, height: size * 0.67 }}
+          />
+          <motion.div
+            className="absolute rounded-full border border-primary/25"
+            animate={{ scale: [1, 2], opacity: [0.5, 0] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: 'easeOut', delay: 0.35 }}
+            style={{ width: size * 0.67, height: size * 0.67 }}
+          />
+        </>
+      )}
+
+      {/* Rotating SVG wave lines */}
+      <motion.svg
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        className="absolute"
+        animate={{ rotate: 360 }}
+        transition={{ duration: isActive || isSpeaking ? 4 : 9, repeat: Infinity, ease: 'linear' }}
+      >
+        <defs>
+          <radialGradient id="orbGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="hsl(35 100% 60%)" stopOpacity="1" />
+            <stop offset="100%" stopColor="hsl(25 100% 45%)" stopOpacity="0.6" />
+          </radialGradient>
+        </defs>
+        {waves.map((w, i) => (
+          <motion.path
+            key={i}
+            d={buildPath(w.phase, w.rs)}
+            fill="none"
+            stroke="url(#orbGrad)"
+            strokeWidth={size * 0.012}
+            strokeOpacity={w.opacity}
+            animate={{
+              d: [buildPath(w.phase, w.rs), buildPath(w.phase + 0.5, w.rs * 0.95), buildPath(w.phase, w.rs)],
+              strokeOpacity: isActive || isSpeaking ? [w.opacity, w.opacity * 1.4, w.opacity] : [w.opacity, w.opacity * 0.7, w.opacity],
+            }}
+            transition={{
+              duration: isActive || isSpeaking ? 1.2 : 3.5,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: w.delay,
+            }}
+          />
+        ))}
+      </motion.svg>
+
+      {/* Counter-rotate second layer for depth */}
+      <motion.svg
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        className="absolute"
+        animate={{ rotate: -360 }}
+        transition={{ duration: isActive || isSpeaking ? 6 : 14, repeat: Infinity, ease: 'linear' }}
+      >
+        {waves.slice(0, 3).map((w, i) => (
+          <motion.path
+            key={i}
+            d={buildPath(w.phase + Math.PI, w.rs * 0.7)}
+            fill="none"
+            stroke="hsl(30 100% 65%)"
+            strokeWidth={size * 0.008}
+            strokeOpacity={w.opacity * 0.5}
+            animate={{
+              d: [buildPath(w.phase + Math.PI, w.rs * 0.7), buildPath(w.phase + Math.PI + 0.4, w.rs * 0.65), buildPath(w.phase + Math.PI, w.rs * 0.7)],
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: w.delay + 0.3 }}
+          />
+        ))}
+      </motion.svg>
+
+      {/* Center bot icon */}
+      <motion.div
+        className="relative z-10 flex items-center justify-center rounded-full"
+        style={{
+          width: size * 0.33,
+          height: size * 0.33,
+          background: 'linear-gradient(135deg, hsl(30 100% 50%), hsl(25 100% 42%))',
+          boxShadow: '0 0 16px hsl(30 100% 50% / 0.5)',
+        }}
+        animate={isSpeaking ? { scale: [1, 1.12, 1] } : { scale: [1, 1.04, 1] }}
+        transition={{ duration: isSpeaking ? 0.5 : 3, repeat: Infinity, ease: 'easeInOut' }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.93 }}
+      >
+        <Bot className="text-white" style={{ width: size * 0.15, height: size * 0.15 }} />
+      </motion.div>
+    </div>
+  );
+};
+
+// Keep alias for backward compat
+const OrbRings = ({ isActive, isSpeaking }: { isActive: boolean; isSpeaking: boolean }) => (
+  <WaveOrb isActive={isActive} isSpeaking={isSpeaking} size={120} />
 );
 
 // Voice bars (ChatGPT-style)
@@ -199,7 +293,7 @@ const AIChatbot = () => {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
-        className="flex flex-col items-center gap-3 mb-6"
+        className="flex flex-col items-center gap-2 mb-6"
       >
         {/* Label above orb */}
         <motion.div
@@ -212,12 +306,11 @@ const AIChatbot = () => {
           AI-powered — ask me anything
         </motion.div>
 
-        {/* Orb button */}
-        <div onClick={() => setIsOpen(true)}>
-          <OrbRings isActive={false} isSpeaking={false} />
+        {/* Wave orb — larger in hero */}
+        <div onClick={() => setIsOpen(true)} className="cursor-pointer">
+          <WaveOrb isActive={false} isSpeaking={false} size={140} />
         </div>
 
-        {/* Mic / status label below orb */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -270,8 +363,8 @@ const AIChatbot = () => {
                     {autoSpeak ? <Volume2 className="w-4 h-4 text-primary" /> : <VolumeX className="w-4 h-4" />}
                   </button>
 
-                  {/* Mini orb in header */}
-                  <OrbRings isActive={isRecording} isSpeaking={isSpeaking} />
+                  {/* Wave orb in header */}
+                  <WaveOrb isActive={isRecording} isSpeaking={isSpeaking} size={96} />
 
                   <div className="mt-3 text-center">
                     <h3 className="font-semibold text-sm text-foreground">Ask about Abhishek</h3>
