@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowDown, Zap, Download } from 'lucide-react';
+import AIChatbot from '@/components/AIChatbot';
 
 const Hero = () => {
   const scrollToAbout = () => {
@@ -25,6 +26,9 @@ const Hero = () => {
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="space-y-6"
         >
+          {/* AI Chatbot Orb — above status badge */}
+          <AIChatbot />
+
           {/* Status Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
