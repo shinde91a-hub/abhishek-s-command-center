@@ -132,22 +132,6 @@ const WaveOrb = ({ isActive, isSpeaking, size = 120 }: { isActive: boolean; isSp
         ))}
       </motion.svg>
 
-      {/* Center bot icon */}
-      <motion.div
-        className="relative z-10 flex items-center justify-center rounded-full"
-        style={{
-          width: size * 0.33,
-          height: size * 0.33,
-          background: 'linear-gradient(135deg, hsl(30 100% 50%), hsl(25 100% 42%))',
-          boxShadow: '0 0 16px hsl(30 100% 50% / 0.5)',
-        }}
-        animate={isSpeaking ? { scale: [1, 1.12, 1] } : { scale: [1, 1.04, 1] }}
-        transition={{ duration: isSpeaking ? 0.5 : 3, repeat: Infinity, ease: 'easeInOut' }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.93 }}
-      >
-        <Bot className="text-white" style={{ width: size * 0.15, height: size * 0.15 }} />
-      </motion.div>
     </div>
   );
 };
