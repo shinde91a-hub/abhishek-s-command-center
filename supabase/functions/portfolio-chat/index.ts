@@ -5,6 +5,8 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+const MAX_MESSAGE_LENGTH = 1000;
+
 const ABHISHEK_CONTEXT = `You are an AI assistant representing Abhishek Shinde's professional portfolio. Answer questions about his experience, skills, and approach to work based on the following information:
 
 ABOUT ABHISHEK SHINDE:
@@ -55,11 +57,26 @@ serve(async (req) => {
   }
 
   try {
-    const { message } = await req.json();
-    
-    if (!message) {
+    const body = await req.json().catch(() => null);
+    const message = body?.message;
+
+    if (!message || typeof message !== "string") {
       return new Response(
-        JSON.stringify({ error: "Message is required" }),
+        JSON.stringify({ error: "A valid message is required." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const trimmed = message.trim();
+    if (trimmed.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Message cannot be empty." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    if (trimmed.length > MAX_MESSAGE_LENGTH) {
+      return new Response(
+        JSON.stringify({ error: `Message is too long. Maximum ${MAX_MESSAGE_LENGTH} characters.` }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -67,10 +84,13 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
       console.error("LOVABLE_API_KEY is not configured");
-      throw new Error("AI service not configured");
+      return new Response(
+        JSON.stringify({ error: "Service temporarily unavailable." }),
+        { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
-    console.log("Calling Lovable AI with message:", message.substring(0, 100));
+    console.log("Calling AI with message length:", trimmed.length);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -82,7 +102,7 @@ serve(async (req) => {
         model: "google/gemini-3-flash-preview",
         messages: [
           { role: "system", content: ABHISHEK_CONTEXT },
-          { role: "user", content: message },
+          { role: "user", content: trimmed },
         ],
         max_tokens: 500,
         temperature: 0.7,
@@ -92,7 +112,7 @@ serve(async (req) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error("AI gateway error:", response.status, errorText);
-      
+
       if (response.status === 429) {
         return new Response(
           JSON.stringify({ error: "Too many requests. Please try again later." }),
@@ -105,12 +125,15 @@ serve(async (req) => {
           { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
-      throw new Error("AI service error");
+      return new Response(
+        JSON.stringify({ error: "Unable to process your request right now." }),
+        { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     const data = await response.json();
     const reply = data.choices?.[0]?.message?.content || "I couldn't generate a response.";
-    
+
     console.log("AI response generated successfully");
 
     return new Response(
@@ -120,7 +143,7 @@ serve(async (req) => {
   } catch (error) {
     console.error("Portfolio chat error:", error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }),
+      JSON.stringify({ error: "Unable to process your request." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
