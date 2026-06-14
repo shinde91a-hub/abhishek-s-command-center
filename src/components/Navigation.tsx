@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, User, FileText, Briefcase, Mail, Menu, X } from 'lucide-react';
+import { Home, User, FileText, Briefcase, Mail, Menu, X, Layers } from 'lucide-react';
 
 const navItems = [
   { name: 'Home', path: '/', icon: Home },
   { name: 'About', path: '/#about', icon: User },
   { name: 'Principles', path: '/#principles', icon: FileText },
+  { name: 'Projects', path: '/projects', icon: Layers },
   { name: 'Decision Logs', path: '/#decisions', icon: Briefcase },
   { name: 'Contact', path: '/#contact', icon: Mail },
 ];
